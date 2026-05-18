@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🍫 Шоколадная лаборатория | КБЖУ + Формула Миффлина</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="laboratory">
+    <h1>🧪 ШОКОЛАДНАЯ ЛАБОРАТОРИЯ 🍫</h1>
+    <div class="sub">⚗️ регулируй ингредиенты — создай идеальный шоколад!</div>
+
+    <div class="workspace">
+        <div class="ingredients-panel">
+            <div class="section-title">📊 ИНГРЕДИЕНТЫ</div>
+            
+            <div id="slidersContainer" class="sliders-container"></div>
+
+            <div class="size-selector">
+                <div style="font-weight: bold; text-align: center;">🍫 РАЗМЕР ПЛИТКИ (кусочки)</div>
+                <div class="size-buttons" id="sizeButtons">
+                    <button data-size="4" class="size-btn">4 кус. (40г)</button>
+                    <button data-size="8" class="size-btn">8 кус. (80г)</button>
+                    <button data-size="15" class="size-btn">15 кус. (150г)</button>
+                </div>
+            </div>
+
+            <div class="additives-section">
+                <div class="section-title" style="font-size:1.2rem;">🍬 НАЧИНКА (по желанию)</div>
+                <div id="additivesContainer" class="additives-grid"></div>
+            </div>
+
+            <div class="centrifuge-area" id="centrifugeBlock">
+                🌀 <strong>ЦЕНТРИФУГА ДЛЯ ВОЗДУШНОСТИ</strong> 🌀<br>
+                <button id="centrifugeBtn" class="centri-btn">💨 ЗАПУСТИТЬ ЦЕНТРИФУГУ 💨</button>
+                <div id="airStatus" class="air-status">❄️ Без насыщения</div>
+            </div>
+
+            <button id="fridgeBtn" class="centri-btn fridge-btn">❄️ ПОМЕСТИТЬ В ХОЛОДИЛЬНИК ❄️</button>
+        </div>
+
+        <div class="result-panel">
+            <div class="chocolate-preview" id="resultBox">
+                <div style="opacity: 0.8; font-size: 3rem;">🍫🍬</div>
+                <div style="font-size:1.2rem;">Ваш шоколад ещё не создан</div>
+                <div>~~ выбери ингредиенты и охлади ~~</div>
+            </div>
+            
+            <button id="finishBtn" class="done-btn">✅ ГОТОВО! ПОЛУЧИТЬ РЕЗУЛЬТАТ ✅</button>
+            
+            <!-- БЛОК КБЖУ -->
+            <div class="medical-nutrition-block" id="nutritionBlock" style="display: none;">
+                <div class="section-title" style="font-size:1rem; background:#5e7a5e;">📊 КБЖУ (на всю плитку)</div>
+                <div class="nutrition-grid" id="nutritionGrid">
+                    <div class="nutrition-item">🔥 -- ккал</div>
+                    <div class="nutrition-item">🥩 -- г белков</div>
+                    <div class="nutrition-item">🧈 -- г жиров</div>
+                    <div class="nutrition-item">🍚 -- г углеводов</div>
+                </div>
+                
+                <div class="section-title" style="font-size:1rem; background:#7a5e5e; margin-top: 12px;">🩺 ФОРМУЛА МИФФЛИНА-САН-ЖЕОРА</div>
+                <div class="mifflin-calculator">
+                    <div class="bmi-input-group">
+                        <label>👤 Вес (кг):</label>
+                        <input type="number" id="userWeight" placeholder="70" value="70" step="1">
+                    </div>
+                    <div class="bmi-input-group">
+                        <label>📏 Рост (см):</label>
+                        <input type="number" id="userHeight" placeholder="170" value="170" step="1">
+                    </div>
+                    <div class="bmi-input-group">
+                        <label>🎂 Возраст (лет):</label>
+                        <input type="number" id="userAge" placeholder="30" value="30" step="1">
+                    </div>
+                    <div class="bmi-input-group">
+                        <label>⚧ Пол:</label>
+                        <select id="userGender">
+                            <option value="female">👩 Женский</option>
+                            <option value="male">👨 Мужской</option>
+                        </select>
+                    </div>
+                    <div class="bmi-input-group">
+                        <label>🏃 Уровень активности:</label>
+                        <select id="userActivity">
+                            <option value="1.2">🛋️ Минимальный (офисная работа)</option>
+                            <option value="1.375">🚶 Легкий (1-3 тренировки/нед)</option>
+                            <option value="1.55">🏃 Средний (3-5 тренировок/нед)</option>
+                            <option value="1.725">💪 Высокий (6-7 тренировок/нед)</option>
+                            <option value="1.9">⚡ Очень высокий (спортсмен)</option>
+                        </select>
+                    </div>
+                    
+                    <button id="explainMifflinBtn" class="explain-btn">📖 Что это за формула?</button>
+                    
+                    <div id="mifflinResult" class="mifflin-result"></div>
+                    <div id="chocolateNorm" class="chocolate-norm"></div>
+                </div>
+                
+                <div id="mifflinExplanation" class="mifflin-explanation" style="display: none;">
+                    <div class="explanation-content">
+                        <strong>🧮 Что такое формула Миффлина-Сан-Жеора?</strong><br><br>
+                        Это самая точная формула для расчёта <strong>базального метаболизма</strong> (BMR) — количества калорий, которое ваше тело тратит в состоянии покоя.<br><br>
+                        <strong>📐 Формула:</strong><br>
+                        • <strong>Для женщин:</strong> (10 × вес в кг) + (6.25 × рост в см) - (5 × возраст) - 161<br>
+                        • <strong>Для мужчин:</strong> (10 × вес в кг) + (6.25 × рост в см) - (5 × возраст) + 5<br><br>
+                        <strong>✨ Зачем это нужно?</strong><br>
+                        Умножив BMR на коэффициент активности, вы получаете <strong>дневную норму калорий</strong> для поддержания веса. Это поможет понять, какую долю от нормы составляет ваша шоколадная плитка!<br><br>
+                        <strong>📚 Историческая справка:</strong><br>
+                        Формула была разработана в 1990 году диетологами Mifflin и St. Jeor как более точная замена устаревшей формуле Харриса-Бенедикта. Сегодня она считается <strong>золотым стандартом</strong> в диетологии.
+                    </div>
+                </div>
+                
+                <div class="medical-math">
+                    📐 <strong>Расчёт нормы калорий:</strong> BMR × коэффициент активности = ваша дневная норма
+                </div>
+            </div>
+            
+            <div class="recipe-hint" id="recipeHint">
+                💡 <strong>РЕЦЕПТЫ И МАССОВАЯ ДОЛЯ:</strong><br><br>
+                🍫 <strong>ТЁМНЫЙ ШОКОЛАД</strong><br>
+                • Какао: ≥40% | Сахар: ≤10% | Молоко: 0-5% | Масло: ≥18%<br><br>
+                🥛 <strong>МОЛОЧНЫЙ ШОКОЛАД</strong><br>
+                • Какао: ≥25% | Сахар: 40-45% | Молоко: ≥12% | Масло: ≥12%<br><br>
+                🤍 <strong>БЕЛЫЙ ШОКОЛАД</strong><br>
+                • Какао: 0% | Сахар: 50-55% | Молоко: ≥20% | Масло: ≥20%<br><br>
+                💨 Воздушный: доступен только для белого/молочного
+            </div>
+        </div>
+    </div>
+    
+    <footer>⚙️ Выбирай ингредиенты → получай шоколад! Формула Миффлина рассчитает твою норму калорий.</footer>
+</div>
+
+<div id="secretChocolate" class="secret-chocolate">
+    🍫
+</div>
+
+<div id="factModal" class="fact-modal">
+    <div class="fact-modal-content">
+        <span class="fact-close">&times;</span>
+        <div class="fact-emoji">🍬</div>
+        <div id="factText" class="fact-text"></div>
+        <div class="fact-footer">💡 малоизвестный факт о шоколаде</div>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
